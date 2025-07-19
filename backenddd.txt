@@ -1,0 +1,130 @@
+
+⚙️ TECH STACK
+Framework: Node.js with Express
+
+Database: Supabase (PostgreSQL)
+
+Auth: Custom OTP-based (via Email)
+
+Storage: Supabase Storage for receipts/photos
+
+Email Service: Supabase functions or 3rd-party SMTP (like Resend, SendGrid)
+
+Security: JWT for session, bcrypt for password hash (admins), rate limiting OTP
+
+🧩 CORE MODULES
+1. Auth Module (OTP-based Login)
+Student Login (Email + Scholar ID)
+
+POST /auth/send-otp
+
+Input: { email, scholar_id }
+
+Sends OTP (with retry logic capped to 3)
+
+POST /auth/verify-otp
+
+Input: { email, otp }
+
+If correct → returns JWT token + redirects to dashboard
+
+Admin Login
+
+POST /admin/login
+
+Input: { email, password }
+
+Response: JWT token if successful
+
+2. Student Dashboard Module
+GET /student/profile
+
+Auth: Student JWT
+
+Returns prefilled data from Supabase students table
+
+POST /student/dues
+
+Upload SBI Collect receipt
+
+Input: { dues_type, amount_paid?, receipt_file }
+
+Saves record in dues_payments
+
+GET /student/dues/status
+
+Shows approval status of dues
+
+POST /student/register
+
+Input: registration form fields (JSON)
+
+Validates required dues approval → saves to registration_forms
+
+GET /student/registration
+
+Fetch student’s latest form, status, and remarks if any
+
+GET /student/notifications
+
+Returns all notifications targeted to student
+
+3. Admin Panel Module
+GET /admin/students
+
+List all students by filter (dept, year, reg. status)
+
+GET /admin/student/:id
+
+View full profile + form + receipts + status logs
+
+POST /admin/verify-dues
+
+Input: { student_id, dues_id, status, remarks }
+
+POST /admin/verify-form
+
+Input: { student_id, form_id, status, remarks }
+
+POST /admin/notifications
+
+Input: { title, body, target }
+
+Pushes notice to notifications table
+
+4. OTP & Session Management
+Auto-expiry of OTPs (5 min)
+
+3 Attempt max, then lock for 15 min
+
+JWT expires after 30 mins inactivity (renewable)
+
+otp_logs table for tracking all email OTPs
+
+5. Common Middleware
+JWT Auth check middleware (/student/* and /admin/*)
+
+Rate limiter for OTP endpoints
+
+Input validation (via Zod or Joi)
+
+File upload middleware (Multer for Supabase upload)
+
+🧪 ERROR HANDLING
+Error Type	Status Code	Description
+Invalid OTP	401	Max attempts, incorrect OTP
+Unauthorized	403	No token or expired token
+Invalid Form Input	400	Missing or wrong fields
+Server Error	500	Unexpected backend failure
+
+🔒 SECURITY PRACTICES
+Sanitize form inputs
+
+Hash all sensitive admin data
+
+Secure upload URLs with expiry tokens (Supabase signed URLs)
+
+Role-based access in admin routes
+
+OTP rate limiter: 1 request/minute per email
+

@@ -1,0 +1,226 @@
+Project Name: NIT Silchar Online Semester Registration System
+Platform: Web (Responsive)
+Theme: Light, Clean, Minimal
+Users: Undergraduate Students of NIT Silchar
+Frontend Stack: React.js + TailwindCSS (recommended)
+
+📌 1. Pages & Routes
+🔐 A. Login Page (/login)
+Fields:
+
+Scholar ID (Text Input)
+
+Institute Email (Text Input)
+
+Actions:
+
+"Send OTP" (Button)
+
+"Remember Me" (Toggle)
+
+Validations:
+
+Valid scholar ID format
+
+Email must match pattern: [anything]_UZ@<branch>.nits.ac.in
+
+On Submit:
+
+Slide transition to OTP verification page
+
+🔐 B. OTP Page (/verify-otp)
+Field:
+
+OTP (6-digit input)
+
+Actions:
+
+"Verify OTP" (Button)
+
+Notes:
+
+Max 3 attempts allowed
+
+Resend option in background (no timer UI)
+
+No "Back to Login" button
+
+Success:
+
+Slide transition to Dashboard
+
+📋 C. Dashboard Page (/dashboard)
+Header:
+
+Welcome text: “Welcome, <Name> | Scholar ID: <ID>”
+
+Profile icon
+
+Conditional Popup on Login:
+
+If dues pending, modal popup saying:
+
+"⚠ You have pending dues. Please clear them to proceed with registration."
+
+Sticky Alert (Top):
+
+Banner if dues not cleared
+
+Dashboard Cards (2x3 Grid):
+
+📝 Registration Form
+
+Button: “Fill Now”
+
+💳 Dues Payment
+
+Button: “Pay + Upload Receipt”
+
+📁 My Documents
+
+Button: “View/Edit”
+
+🔔 Notifications
+
+Shows count badge
+
+📊 Registration Status
+
+Text: Pending / Verified / Rejected
+
+🧾 Download Registration Slip
+
+Disabled until verification
+
+Progress Tracker Bar (Top):
+
+Login → Dues → Form → Payment → Verification → Registered
+
+Highlight current step
+
+📃 D. Registration Form Page (/form)
+Prefilled Data from Supabase:
+
+Name, Scholar ID, Email, Dept., Year, etc.
+
+Fields to Fill:
+
+Subject Selection (multi-dropdown)
+
+Semester No.
+
+Local Address
+
+Guardian Contact
+
+Aadhar No. (optional)
+
+Upload Photo & Signature
+
+Submission Rules:
+
+Cannot be submitted until dues cleared
+
+Submit button disabled otherwise
+
+💳 E. Dues Page (/dues)
+Content:
+
+SBI Collect payment instructions
+
+Upload section (PDF or JPG)
+
+Fields:
+
+Upload Receipt
+
+Select: Dues Type (e.g., Hostel/Library/Dept.)
+
+Status Tag:
+
+Pending / Under Review / Accepted
+
+📁 F. My Documents Page (/documents)
+Content:
+
+Uploaded Photo, Signature, Payment Receipt
+
+Option to update before deadline
+
+🔔 G. Notifications Page (/notifications)
+Content:
+
+List of all messages from admin
+
+Read/unread status
+
+📊 H. Status Page (/status)
+Content:
+
+Registration Form: Submitted / Not Submitted
+
+Dues: Cleared / Pending
+
+Final Status: Registered / Not Verified / Rejected
+
+Admin Remarks (optional)
+
+⚙️ 2. Global Components
+Navigation Bar:
+
+Visible on dashboard and inner pages
+
+Contains: Dashboard, Form, Dues, Notifications, Status, Logout
+
+Footer:
+
+© NIT Silchar 2025. All rights reserved.
+
+Display NIT Silchar logo
+
+Error Messages:
+
+Invalid Email Format
+
+Scholar ID not found
+
+OTP Incorrect (show attempts left)
+
+Transitions:
+
+Smooth sliding between login → OTP → dashboard
+
+Accessibility:
+
+Fully keyboard-navigable
+
+Font contrast to meet accessibility standards
+
+🧪 3. Testing Requirements
+Form validations and field dependencies
+
+Error states and limit triggers (e.g., OTP attempts)
+
+File upload support for receipts (pdf, jpg)
+
+Popups and alert refresh every 10 mins if dues pending
+
+Session persist (if "Remember Me" is toggled)
+
+🧑‍🎓 4. Design Guidelines
+Light Theme Colors:
+
+Background: #f9fafb
+
+Primary: #0a2342 (NITS Blue)
+
+Accent: #ff8c00 (Orange)
+
+Text: Dark gray, readable
+
+Typography: Sans-serif, clean and uniform
+
+Logo: Will be provided by user
+
+Responsiveness: Should work seamlessly on mobile, tablet, desktop
+

@@ -1,0 +1,213 @@
+Module: Admin Panel
+Platform: Web (Responsive)
+Users: Institute Admin Staff, Faculty Advisors
+Access: Special login via admin credentials (no OTP)
+Frontend Stack: React.js + TailwindCSS (recommended)
+
+📌 1. Pages & Routes
+🔐 A. Admin Login Page (/admin)
+Fields:
+
+Admin Email (text input)
+
+Password (masked input)
+
+Validation:
+
+Basic email/password format
+
+On Successful Login:
+
+Redirect to /admin/dashboard
+
+🖥️ B. Admin Dashboard (/admin/dashboard)
+Header:
+
+“Welcome, <Admin Name> | Role: Super Admin / Dept. Verifier”
+
+Logout button
+
+Quick Stats:
+
+✅ Total Students Registered
+
+🟡 Pending Verifications
+
+❌ Rejected Forms
+
+📥 Dues Receipts Uploaded
+
+Navigation Sidebar:
+
+Dashboard
+
+Student List
+
+Dues Verifications
+
+Registration Verifications
+
+Notifications
+
+Settings
+
+👨‍🎓 C. Student List Page (/admin/students)
+Table Columns:
+
+Scholar ID
+
+Name
+
+Email
+
+Department
+
+Year
+
+Registration Status
+
+Dues Status
+
+Action (🔍 View Profile)
+
+Filters:
+
+Department
+
+Year
+
+Status (Pending / Verified / Rejected)
+
+📁 D. Student Profile View (/admin/students/:id)
+Sections:
+
+Personal Details (Name, Email, Aadhar, Guardian, etc.)
+
+Uploaded Documents (Photo, Signature, Receipt)
+
+Registration Form Summary (Subjects, Semester, etc.)
+
+Dues Receipt View
+
+Admin Actions:
+
+✅ Approve Registration
+
+❌ Reject Registration
+
+📝 Add Remarks (optional text)
+
+Activity Log:
+
+Timeline view of status updates (e.g., “Dues Approved → Form Submitted → Verified”)
+
+💰 E. Dues Verification Page (/admin/dues)
+Table Columns:
+
+Scholar ID
+
+Student Name
+
+Uploaded Receipt (Download link)
+
+Type of Dues (Hostel/Dept.)
+
+Current Status (Pending / Verified / Rejected)
+
+Actions (✔️ Accept | ❌ Reject)
+
+Remarks:
+
+Optional remarks field when rejecting dues
+
+📃 F. Registration Verification Page (/admin/verify)
+Content:
+
+All students who submitted form + dues
+
+View Form Summary (popup/modal)
+
+Actions:
+
+Approve / Reject form
+
+Leave a remark (e.g., “Signature unclear”)
+
+🔔 G. Notification Center (/admin/notifications)
+Create Notification:
+
+Title (text)
+
+Body (rich text)
+
+Target Audience: All / Specific Dept / Specific Year
+
+Past Notifications Table:
+
+Title
+
+Date
+
+Sent To
+
+Status (Sent / Scheduled)
+
+⚙️ H. Admin Settings (/admin/settings)
+Manage Admins:
+
+Add new admin (email + role)
+
+Role-based access:
+
+Super Admin (full access)
+
+Dept Verifier (view & verify within department only)
+
+System Settings:
+
+Registration Deadline
+
+Upload Format Rules
+
+OTP Service Toggle
+
+🔒 2. Security & Access Control
+Role-based dashboard rendering
+
+Admins must be pre-registered in Supabase table
+
+Sessions stored with JWT + auto logout after inactivity
+
+🧪 3. Testing Requirements
+Access control per role
+
+Form and dues approval logic works independently
+
+Email notification sent on approval/rejection (optional)
+
+Remarks persist in database
+
+Student progress updates on verification
+
+🎨 4. UI Guidelines
+Theme: Light, flat design with table-heavy UI
+
+Accent Color: NITS Blue (#0a2342)
+
+Table Design: Compact, sortable, paginated
+
+Modal Design: Slide-in drawer or popups for verification
+
+Navigation: Sidebar always visible, collapsible on mobile
+
+Responsiveness: Dashboard and tables adapt for tablet view
+
+🧩 5. Optional Features (Phase 2)
+Bulk upload student status (via CSV)
+
+Comment system for multiple verifiers
+
+Email notifications on status change
+
+Admin dashboard analytics (charts: % registered, dept-wise stats)
+

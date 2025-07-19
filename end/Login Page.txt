@@ -1,0 +1,76 @@
+Frontend PRD – Login Page
+📌 Purpose:
+To authenticate students using their Scholar ID and Institute Email via OTP verification.
+
+🎨 UI Layout:
+👁️ Visual Elements:
+University Logo (Top Center)
+
+Use: NIT Silchar Logo
+
+Style: Subtle shadow, fixed width (120px)
+
+Form Section (Centered Card):
+
+Step 1:
+
+🔹 Input: Scholar ID
+
+🔹 Input: Institute Email
+
+🔹 Checkbox: Remember Me
+
+🔹 Button: Send OTP
+
+🔄 On submit: Slide animation → OTP verification screen
+
+Step 2 (after Send OTP):
+
+🔹 Input: OTP (6 digits)
+
+🔹 Button: Verify OTP
+
+🔙 Back button (if user entered wrong email/ID)
+
+🔄 On successful OTP verification: Smooth slide → Dashboard
+
+✨ Animations:
+Clean slide transitions between steps (use Framer Motion or Tailwind transitions)
+
+Success toast on correct OTP
+
+Error alert if:
+
+Student not found in Supabase
+
+Email domain mismatch
+
+OTP wrong or expired
+
+⚙️ Functional Behavior:
+Step	Action	Behavior
+1	Submit Scholar ID + Email	Check against Supabase user record
+2	If matched	Send OTP to email, move to OTP screen
+3	If unmatched	Show error: "Student record not found"
+4	On OTP input	Verify OTP
+5	If OTP verified	Save session, redirect to /dashboard
+6	If "Remember Me" checked	Store scholar ID + email in localStorage or sessionStorage
+7	If login successful	Slide animation, redirect, toast success
+8	If login failed	Shake animation on form, toast error
+
+📱 Responsive:
+Fully mobile-friendly
+
+Centered card with max-width (w-[400px]) on desktop
+
+Full width on small screens
+
+🧩 Tech Suggestions:
+✅ React + Tailwind
+
+✅ Framer Motion for animations
+
+✅ Supabase for login verification + OTP mail
+
+✅ Toast messages via react-toastify or @shadcn/ui's <Toast />
+

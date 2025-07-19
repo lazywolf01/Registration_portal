@@ -1,0 +1,107 @@
+🧾 DATABASE SCHEMA (Supabase/PostgreSQL)
+Main Tables:
+
+students
+
+admins
+
+dues_payments
+
+registration_forms
+
+notifications
+
+verifications_log
+
+otp_logs
+
+📄 Table: students
+Column Name	Type	Constraints
+id	UUID	Primary Key (auto-gen by Supabase)
+scholar_id	Text	Unique, Not Null
+name	Text	Not Null
+email	Text	Unique, Not Null
+department	Text	Not Null
+year	Integer	Not Null
+phone	Text	Optional
+dob	Date	Optional
+aadhar_number	Text	Optional
+guardian_name	Text	Optional
+guardian_phone	Text	Optional
+profile_photo_url	Text (URL)	Optional
+signature_url	Text (URL)	Optional
+status	Text	Default: unverified (unverified, registered, verified, rejected)
+created_at	Timestamp	Default: now()
+
+🔐 Table: admins
+Column Name	Type	Constraints
+id	UUID	Primary Key
+email	Text	Unique, Not Null
+name	Text	Not Null
+role	Text	super_admin, dept_verifier
+department	Text	Required if dept_verifier
+password_hash	Text	Store hashed password securely
+last_login	Timestamp	Auto-updated
+created_at	Timestamp	Default: now()
+
+💵 Table: dues_payments
+Column Name	Type	Constraints
+id	UUID	Primary Key
+student_id	UUID	Foreign Key → students.id
+receipt_url	Text (URL)	Not Null
+dues_type	Text	hostel, department, library, etc.
+amount_paid	Numeric	Optional
+status	Text	pending, approved, rejected
+reviewed_by	UUID	Foreign Key → admins.id (optional)
+reviewed_at	Timestamp	Optional
+remarks	Text	Optional
+uploaded_at	Timestamp	Default: now()
+
+📝 Table: registration_forms
+Column Name	Type	Constraints
+id	UUID	Primary Key
+student_id	UUID	Foreign Key → students.id
+semester	Integer	Not Null
+subjects	JSONB	Array of subjects with codes
+form_data	JSONB	Full form dump (editable structure)
+status	Text	submitted, verified, rejected
+verified_by	UUID	Foreign Key → admins.id (optional)
+remarks	Text	Optional
+submitted_at	Timestamp	Default: now()
+verified_at	Timestamp	Optional
+
+🔁 Table: verifications_log
+Column Name	Type	Constraints
+id	UUID	Primary Key
+student_id	UUID	Foreign Key → students.id
+action_type	Text	dues_verified, form_verified, etc.
+performed_by	UUID	Foreign Key → admins.id
+remarks	Text	Optional
+timestamp	Timestamp	Default: now()
+
+🔔 Table: notifications
+Column Name	Type	Constraints
+id	UUID	Primary Key
+title	Text	Not Null
+body	Text	Rich text or plain
+target	Text	all, dept:ME, year:2, etc.
+created_by	UUID	Foreign Key → admins.id
+created_at	Timestamp	Default: now()
+
+🔑 Table: otp_logs
+Column Name	Type	Constraints
+id	UUID	Primary Key
+email	Text	Not Null
+otp_code	Text	Encrypted or plain
+status	Text	sent, verified, expired
+attempts	Integer	Default: 0
+created_at	Timestamp	Default: now()
+verified_at	Timestamp	Optional
+
+✅ Relationships Overview
+students.id → links to dues_payments.student_id & registration_forms.student_id
+
+admins.id → used in verifications_log, notifications, and dues_payments.reviewed_by
+
+otp_logs.email → maps to students.email during login verification
+

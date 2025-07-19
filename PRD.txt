@@ -1,0 +1,172 @@
+**Product Requirements Document (PRD)**
+**Project:** NIT Silchar Online Semester Registration System
+**Version:** 1.0
+**Last Updated:** 18 July 2025
+
+---
+
+### 📅 Objective
+
+To build a streamlined, secure, and user-friendly web-based semester registration system for students of NIT Silchar. The platform will manage student authentication, dues clearance, form submissions, and admin verification workflows with clear dashboards.
+
+---
+
+### 🔄 Workflows Overview
+
+#### 1. **Login & Authentication Workflow (Student)**
+
+* Student enters Scholar ID and Institute Email ID.
+* System validates both against Supabase database.
+* If matched, system sends OTP to the email.
+* UI slides to OTP screen.
+* If OTP is valid (within 3 attempts), student is logged in and redirected to dashboard.
+* Remember me toggle saves session.
+
+#### 2. **Dues Clearance Workflow**
+
+* On login, dashboard checks dues clearance.
+* If dues are pending, an alert prompts upload of SBI Collect receipt.
+* Admin verifies receipt in Admin Panel.
+* Upon verification, student can proceed to registration.
+
+#### 3. **Semester Registration Workflow**
+
+* Prefilled student details fetched from Supabase.
+* Student fills remaining fields (subjects, electives, backlogs, hostel info, etc).
+* Student submits registration form.
+* Admin reviews and verifies form.
+* Status & remarks visible in student dashboard.
+
+#### 4. **Admin Workflow**
+
+* Admin logs in using credentials (email/password).
+* Admin dashboard shows:
+
+  * Pending dues verifications
+  * Pending form verifications
+  * Filters by branch, year, status
+* Admin can approve/reject forms & dues with remarks.
+* Admin can send notifications to students.
+
+---
+
+### 📊 Key Modules
+
+#### 1. **Student Side**
+
+* Scholar ID & Email Login (OTP Auth)
+* OTP Screen (slide transition)
+* Dashboard:
+
+  * Dues alert if pending
+  * Upload SBI receipt
+  * Registration form (prefilled + manual fields)
+  * Track status + admin remarks
+  * Notifications
+
+#### 2. **Admin Panel**
+
+* Login (email + password)
+* View student list (filters by dept, year)
+* View individual student data (profile, dues, form)
+* Approve/reject dues & forms
+* Send bulk or individual notifications
+
+---
+
+### 📊 Database Schema (Supabase)
+
+**Tables:**
+
+1. `students`: Scholar ID, Name, Email, Department, Program, Batch, etc.
+2. `dues_payments`: Student ID, receipt\_url, status, remarks, timestamps
+3. `registration_forms`: Student ID, fields (subjects, electives, hostel), status, remarks
+4. `notifications`: Title, body, target\_audience, date
+5. `otp_logs`: Email, OTP, attempt\_count, created\_at, expiry
+6. `admins`: Email, hashed\_password, role
+
+---
+
+### 🚀 Tech Stack
+
+* **Frontend:** React + Tailwind CSS
+* **Backend:** Node.js + Express
+* **Database:** Supabase (PostgreSQL)
+* **Email Service:** Supabase (or Resend)
+* **Storage:** Supabase Bucket (for receipts)
+* **Auth:** OTP (student), Password (admin)
+
+---
+
+### ⛓ UX Requirements
+
+* Clean, minimal UI (light theme)
+* Sliding transitions (login > OTP > dashboard)
+* Error alerts (invalid email, wrong OTP, etc.)
+* Dues alert overlay if pending
+* Admin panel with simple filters and approval flows
+* Copyright NITS 2025
+
+---
+
+### 🔧 Backend API Overview
+
+#### Student APIs:
+
+* `POST /auth/send-otp`
+* `POST /auth/verify-otp`
+* `GET /student/profile`
+* `POST /student/dues`
+* `GET /student/dues/status`
+* `POST /student/register`
+* `GET /student/registration`
+* `GET /student/notifications`
+
+#### Admin APIs:
+
+* `POST /admin/login`
+* `GET /admin/students`
+* `GET /admin/student/:id`
+* `POST /admin/verify-dues`
+* `POST /admin/verify-form`
+* `POST /admin/notifications`
+
+---
+
+### 🔒 Security & Validations
+
+* OTP expiry: 5 minutes, 3 attempts
+* Rate limit OTP resend (background resend only)
+* JWT auth with middleware
+* File upload protection (Supabase signed URLs)
+* Input validation via Zod
+
+---
+
+### 👥 User Roles
+
+**Student**:
+
+* Auth via OTP
+* Submit dues + registration
+* Track status, notifications
+
+**Admin**:
+
+* Auth via password
+* Verify dues & forms
+* View/manage student data
+* Send notifications
+
+---
+
+### ✅ Success Metrics
+
+* 100% student onboarding within 7 days
+* 90%+ successful form submission rate
+* Instant OTP delivery under 3s
+* <5% admin verification error rate
+
+---
+
+**END OF PRD**
