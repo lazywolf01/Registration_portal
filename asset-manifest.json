@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Registration_portal/static/css/main.c1fbecdb.css",
+    "main.js": "/Registration_portal/static/js/main.118b9397.js",
+    "static/js/453.46dc3e92.chunk.js": "/Registration_portal/static/js/453.46dc3e92.chunk.js",
+    "static/media/NITS.png": "/Registration_portal/static/media/NITS.5aae83f28df4cd7506ab.png",
+    "index.html": "/Registration_portal/index.html",
+    "main.c1fbecdb.css.map": "/Registration_portal/static/css/main.c1fbecdb.css.map",
+    "main.118b9397.js.map": "/Registration_portal/static/js/main.118b9397.js.map",
+    "453.46dc3e92.chunk.js.map": "/Registration_portal/static/js/453.46dc3e92.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c1fbecdb.css",
+    "static/js/main.118b9397.js"
+  ]
+}
