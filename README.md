@@ -142,4 +142,4 @@ If you find a bug or want to improve a feature, feel free to fork and submit a P
 
 ## 📄 License
 
-MIT License © 2025 [Alok Tiwari](
+MIT License © 2025 [Alok Tiwari](https://github.com/lazywolf01/)
