@@ -29,7 +29,9 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "build:tailwind": "tailwindcss -i ./src/index.css -o ./src/tailwind.css",
-    "watch:tailwind": "tailwindcss -i ./src/index.css -o ./src/tailwind.css --watch"
+    "watch:tailwind": "tailwindcss -i ./src/index.css -o ./src/tailwind.css --watch",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +54,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "concurrently": "^9.2.0",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.6"
   }
 }
